@@ -1,0 +1,128 @@
+Node environment variables
+//https://codeburst.io/how-to-easily-set-up-node-environment-variables-in-your-js-application-d06740f9b9bd
+//https://codeburst.io/process-env-what-it-is-and-why-when-how-to-use-it-effectively-505d0b2831e7
+require('dotenv').config();
+
+***********************************************************************************************************
+
+
+// https://codeburst.io/what-is-pug-js-jade-and-how-can-we-use-it-within-a-node-js-web-application-69a092d388eb
+//https://expressjs.com/en/api.html#app.set
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug')
+//Hvis vi vil bruker dot_handlebars istedenfor dot_pug
+app.engine('handlebars', exphbs({defaultLayout:'layout'}));
+
+***********************************************************************************************************
+
+
+//Global Var
+//https://stackoverflow.com/a/16502225
+
+
+***********************************************************************************************************
+
+
+//  routes_path.index= require('./routes/index.js'); routes_path.users= require('./routes/usres.js')
+app.use('/', routes_path.index) 
+app.use('/users', routes_path.users)
+
+***********************************************************************************************************
+// express-validator 5.3.0 
+//https://express-validator.github.io/docs/index.html
+const { body, check, validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
+
+const registerValid = [
+	body('email')
+		.isEmail().withMessage('Please enter a valid e-mail')  
+		.normalizeEmail(),
+
+	body('firstName')
+		.not().isEmpty().withMessage('This field is required')   //withMessage for hver constrain
+		.isLength({ min: 3 }).withMessage('firstName must be at least 3 chars long')
+		.trim()
+		.escape()
+	,
+
+
+	sanitizeBody('terms').toBoolean()
+]
+// eller ,, check istedenfor body ,, les mer
+// const registerValid = [
+// 	check('email')
+// 		.isEmail()
+// 		.normalizeEmail(),
+// 	check('firstName')
+// 		.isLength({ min: 3 })
+// 		.trim()
+// 		.escape(),
+
+// ]
+
+
+***********************************************************************************************************
+
+
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy
+
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+passport.use(new LocalStrategy(
+	(username, password, done) => {  // OBS OBS den kalles "verify callback" http://www.passportjs.org/docs/configure/
+		User.getUserByUsername(username, (err, user) => {
+			if (err) { return done(err); } // if we can't run User.findOne ,, ei db connection failure
+			if (!user) { // wrong user
+				return done(null, false, { message: 'Incorrect username or password.' });
+			}
+			if (!user.validPassword(password , user.password , user.salt)) { // wrong password
+				return done(null, false, { message: 'Incorrect username or password.' });
+			}
+			return done(null, user);
+		});
+	}
+));
+
+
+ovenfor func kaller på 
+
+module.exports.getUserByUsername = (userName, clBk) => {
+    var query = { userName: userName };
+    User.findOne(query, clBk);// after calling findOne we want to run clBk =(err,user)=>{if (err) throw err if (!user) {return done(null, false, { message: 'Unknown User' });}
+}
+
+og 
+
+UserSchema.methods.validPassword = (candidatePassword, encrypted_password, salt) => {
+    var {encrypted_password : inputPassword }=  saltHashPassword(candidatePassword, salt)
+    var isMatch = ( inputPassword === encrypted_password )
+    return isMatch;
+}
+
+*******************************************************************************************************************************************
+
+// route middleware
+// Simple middleware to ensure user is authenticated.
+// Use this middleware on any resource that needs to be protected.
+// If the request is authenticated (typically via a persistent login session),
+// the request will proceed.  Otherwise, the user will be redirected to the
+// login page
+const ensureAuthenticated = (req, res, next)=> {
+	// les mer om req.isAuthenticated() vs req.session.passport.user 
+	//https://stackoverflow.com/a/27055836
+	if (req.isAuthenticated()) {
+		return next();
+	} else {
+		res.redirect('/users/login');
+	}
+}
+
+// Get Homepage
+router.get('/', ensureAuthenticated, (req, res)=> {
+	res.render('index.handlebars');
+});

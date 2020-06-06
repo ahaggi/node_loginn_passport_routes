@@ -1,0 +1,33 @@
+{
+  "name": "loginn_passport_routes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^6.0.0",
+    "express": "*",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "^5.3.0",
+    "mongodb": "*",
+    "mongoose": "^5.2.5",
+    "nodemon": "^1.18.3",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*",
+    "pug": "^2.0.3",
+    "semantic-ui-css": "^2.3.3",
+    "xlsx": "^0.13.5"
+  }
+}

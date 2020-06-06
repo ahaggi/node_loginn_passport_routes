@@ -1,0 +1,58 @@
+{{#if errors}} {{#each errors}}
+
+<div class="ui negative message">
+    <p>{{msg}}</p>
+</div>
+
+{{/each}} {{/if}}
+<form action="/users/register" method='post' class="ui form">
+    <h3 class="ui dividing header">Register</h3>
+    <div class="field">
+        <label>Name</label>
+        <div class="two fields">
+            <div class="field">
+                <input name="firstName" tabindex="0" placeholder="First Name" type="text">
+            </div>
+
+
+            <div class="field">
+                <input name="lastName" placeholder="Last Name" type="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>User Name</label>
+        <input name="userName" placeholder="User Name" type="text">
+    </div>
+
+    <div class="field">
+        <label>E-mail</label>
+        <input name="email" placeholder="E-mail" type="email">
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <div class="two fields">
+            <div class="field">
+                <input name="password" placeholder="Password" type="password">
+            </div>
+            <div class="field">
+                <input name="passwordConfirm" placeholder="Confirm the password" type="password">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="ui segment">
+        <div class="ui checkbox">
+            <input tabindex="1" name="terms" type="checkbox">
+            <label>I agree to the Terms and Conditions</label>
+        </div>
+    </div>
+
+
+    <button type="submit" class="ui button">Submit</button>
+</form>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LoginApp</title>
+    <link rel="stylesheet" type="text/css" href="/css/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="/css/semantic.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="ui vertically divided grid">
+        <div class="row">
+            <div class="column">
+
+                <div class="ui secondary  menu">
+
+                    {{#if user}} {{!--  res.locals.user --}}
+                    <a href="/" class="item">Dashboard</a>
+                    <a href="/users/logout" class="item">Logout</a>
+                    {{else}}
+                    <a href="/users/login" class="item">Login</a>
+                    <a href="/users/register" class="item">Register</a>
+                    {{/if}}
+
+
+                    <div class="ten menu">
+                        <div class="item">
+                            <div class="ui icon input">
+                                <input placeholder="Search..." type="text">
+                                <i class="search link icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="centered row">
+            <div class="eight wide column">
+
+                {{#if success_msg}}
+                    <div class="ui success message">
+                        <i class="close icon"></i>
+                        {{{ success_msg }}}
+                    </div>
+                {{/if}}
+
+                {{#if error_msg}}
+                    <div class="ui negative message">
+                        <i class="close icon"></i>
+                        {{{ error_msg }}}
+                    </div>
+                {{/if}}
+
+                {{#if error}}
+                    <div class="ui negative message">
+                        <i class="close icon"></i>
+                        {{{ error }}}
+                    </div>
+                {{/if}}
+
+
+                {{{body}}}
+            </div>
+        </div>
+
+
+        <div class="ui row section divider"></div>
+
+        <div class="ui center aligned container">
+            <div class="ui small divided link list">
+
+                <a class="item" href="https://github.com/bradtraversy/loginapp/blob/master/views/layouts/layout.handlebars">&copy; bradtraversy/loginapp</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
